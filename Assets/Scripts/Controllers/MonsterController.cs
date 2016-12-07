@@ -10,12 +10,10 @@ public class MonsterController : MonoBehaviour {
 	private DamageController _damageController;
 
 	private Transform _playerTransform;
-	private MonsterManager _monsterManager;
 
 	private const float DEF_INPUT = 1;
 
 	public Transform PlayerTransform { set { _playerTransform = value; }}
-	public MonsterManager MonsterManager { set { _monsterManager = value; }}
 
 	void Update () 
 	{
@@ -53,9 +51,6 @@ public class MonsterController : MonoBehaviour {
 			health.MakeDamage (_damageController.Damage);
 
 		_healthController.MakeDeath ();
-
-
-		//Destroy (gameObject);
 	}
 
 	private void OnBulletCollide(Collider bullet)

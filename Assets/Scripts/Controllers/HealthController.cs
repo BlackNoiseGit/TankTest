@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine.UI;
 
 public class HealthController : MonoBehaviour {
 	[SerializeField]
@@ -8,6 +9,14 @@ public class HealthController : MonoBehaviour {
 	[Range(0,1)]
 	[SerializeField]
 	private float _armorPoints;
+
+	[SerializeField]
+	private Slider _slider;
+	[SerializeField]
+	private Image _fillImage;
+
+	private int _startHealth;
+	private bool firstSet = true;
 
 	public event System.Action<HealthController> DeathHandler;
 
@@ -19,8 +28,17 @@ public class HealthController : MonoBehaviour {
 		}
 		set
 		{
+
 			_healthPoints = value;
+			SetHealthUI ();
 		}
+	}
+
+	void Start()
+	{
+		_startHealth = _healthPoints;
+		_slider.maxValue = _healthPoints;
+		SetHealthUI ();
 	}
 
 	public float ArmorPoints { get { return _armorPoints; }}
@@ -51,5 +69,11 @@ public class HealthController : MonoBehaviour {
 
 		Destroy (gameObject);
 		//gameObject.SetActive (false);
+	}
+
+	private void SetHealthUI ()
+	{
+		_slider.value = HealthPoints;
+		_fillImage.color = Color.Lerp (Color.red, Color.green, HealthPoints / _startHealth);
 	}
 }
