@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class HealthController : MonoBehaviour {
@@ -38,11 +39,17 @@ public class HealthController : MonoBehaviour {
 			
 	}
 
-	private void MakeDeath()
+	public void MakeDeath()
 	{
 		if (DeathHandler != null)
 			DeathHandler (this);
 
-		gameObject.SetActive (false);
+		if (transform.tag == "Tank") 
+		{
+			SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
+		}
+
+		Destroy (gameObject);
+		//gameObject.SetActive (false);
 	}
 }

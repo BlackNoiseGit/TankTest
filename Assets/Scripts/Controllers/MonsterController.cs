@@ -10,21 +10,27 @@ public class MonsterController : MonoBehaviour {
 	private DamageController _damageController;
 
 	private Transform _playerTransform;
+	private MonsterManager _monsterManager;
 
 	private const float DEF_INPUT = 1;
 
 	public Transform PlayerTransform { set { _playerTransform = value; }}
+	public MonsterManager MonsterManager { set { _monsterManager = value; }}
 
 	void Update () 
 	{
+		
+		if (_playerTransform == null)
+			return;
+
 		//calculate is target on the left or on the right side of monster
 		Vector3 relative = transform.InverseTransformPoint(_playerTransform.position);
 		float angle = Mathf.Atan2(relative.x, relative.z);
 
 		float input = angle > 0 ? 1 : -1;
 
-		//_movementController.Turn (input);
-		//_movementController.Move (DEF_INPUT);
+		_movementController.Turn (input);
+		_movementController.Move (DEF_INPUT);
 	}
 
 	private void OnTriggerEnter (Collider other)
@@ -46,7 +52,10 @@ public class MonsterController : MonoBehaviour {
 		if (health != null)
 			health.MakeDamage (_damageController.Damage);
 
-		Destroy (gameObject);
+		_healthController.MakeDeath ();
+
+
+		//Destroy (gameObject);
 	}
 
 	private void OnBulletCollide(Collider bullet)
