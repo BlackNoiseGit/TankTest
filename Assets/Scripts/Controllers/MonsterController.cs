@@ -4,21 +4,27 @@ using System.Collections;
 public class MonsterController : MonoBehaviour {
 	[SerializeField]
 	private MovementController _movementController;
+	[SerializeField]
+	private HealthController _healthController;
+	[SerializeField]
+	private DamageController _damageController;
 
-	public Transform PlayerTransform;
+	private Transform _playerTransform;
 
 	private const float DEF_INPUT = 1;
+
+	public Transform PlayerTransform { set { _playerTransform = value; }}
 
 	void Update () 
 	{
 		//calculate is target on the left or on the right side of monster
-		Vector3 relative = transform.InverseTransformPoint(PlayerTransform.position);
+		Vector3 relative = transform.InverseTransformPoint(_playerTransform.position);
 		float angle = Mathf.Atan2(relative.x, relative.z);
 
 		float input = angle > 0 ? 1 : -1;
 
-		_movementController.Turn (input);
-		_movementController.Move (DEF_INPUT);
+		//_movementController.Turn (input);
+		//_movementController.Move (DEF_INPUT);
 	}
 
 	private void OnTriggerEnter (Collider other)
@@ -29,7 +35,7 @@ public class MonsterController : MonoBehaviour {
 		} 
 		else if (other.transform.tag == "Bullet") 
 		{
-			//
+			OnBulletCollide (other);
 		}
 	}
 
@@ -38,13 +44,16 @@ public class MonsterController : MonoBehaviour {
 		HealthController health = tank.GetComponent<HealthController> ();
 
 		if (health != null)
-			health.MakeDamage (55);
+			health.MakeDamage (_damageController.Damage);
 
 		Destroy (gameObject);
 	}
 
 	private void OnBulletCollide(Collider bullet)
 	{
-		//
+		DamageController damageController = bullet.GetComponent<DamageController> ();
+
+		if (bullet != null)
+			_healthController.MakeDamage (damageController.Damage);
 	}
 }

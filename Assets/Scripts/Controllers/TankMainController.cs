@@ -4,6 +4,11 @@ using System.Collections;
 public class TankMainController : MonoBehaviour {
 	[SerializeField]
 	private MovementController _movementController;
+	[SerializeField]
+	private FireController _fireController;
+	[SerializeField]
+	private Transform _bulletStart;
+
 
 	// Use this for initialization
 	void Start () {
@@ -19,5 +24,9 @@ public class TankMainController : MonoBehaviour {
 		_movementController.Move (movementInput);
 		_movementController.Turn (turnInput);
 	
+		if (Input.GetKeyDown (KeyCode.X)) 
+		{
+			_fireController.FireFromPoint (_bulletStart.position);
+		}
 	}
 }

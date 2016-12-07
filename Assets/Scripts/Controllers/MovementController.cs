@@ -17,8 +17,7 @@ public class MovementController : MonoBehaviour
 
 	public void Move(float movementInput)
 	{
-		Vector3 movement = transform.forward * movementInput;// * _flatSpeed * Time.deltaTime;
-		//_cachedTransform.Translate (_cachedTransform.position + movement);
+		Vector3 movement = transform.forward * movementInput;
 		_cachedTransform.position = Vector3.MoveTowards(_cachedTransform.position, _cachedTransform.position + movement, _flatSpeed * Time.deltaTime);
 	}
 
