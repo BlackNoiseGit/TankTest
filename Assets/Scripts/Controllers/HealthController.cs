@@ -14,6 +14,8 @@ public class HealthController : MonoBehaviour {
 	private Slider _slider;
 	[SerializeField]
 	private Image _fillImage;
+	[SerializeField]
+	private Text _armor;
 
 	private int _startHealth;
 	private bool firstSet = true;
@@ -38,6 +40,8 @@ public class HealthController : MonoBehaviour {
 	{
 		_startHealth = _healthPoints;
 		_slider.maxValue = _healthPoints;
+		_armor.text = (1 -_armorPoints) * 100 + "%";
+
 		SetHealthUI ();
 	}
 
