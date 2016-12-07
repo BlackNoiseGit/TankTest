@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 public class SimplePool : MonoBehaviour {
 
@@ -44,6 +45,7 @@ public class SimplePool : MonoBehaviour {
 		{
 			GameObject last = pooledObjects [pooledObjects.Count - 1];
 
+			//disabled items in the end of list, returned for enabling to the start 
 			if (!last.activeInHierarchy) 
 			{
 				pooledObjects.RemoveAt (pooledObjects.Count - 1);
@@ -69,5 +71,20 @@ public class SimplePool : MonoBehaviour {
 		return go;
 	}
 
+	public static void BackToPool(GameObject item)
+	{
 
+		var key = _pool
+			.FirstOrDefault (x => x.Value.Contains (item))
+			.Key;
+
+		List<GameObject> pooledObjects = null;
+
+		if (_pool.TryGetValue (key, out pooledObjects)) 
+		{
+			item.SetActive (false);
+			pooledObjects.Remove (item);
+			pooledObjects.Add (item);
+		}
+	}
 }

@@ -55,5 +55,7 @@ public class MonsterController : MonoBehaviour {
 
 		if (bullet != null)
 			_healthController.MakeDamage (damageController.Damage);
+
+		SimplePool.BackToPool (bullet.gameObject);
 	}
 }
