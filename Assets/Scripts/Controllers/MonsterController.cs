@@ -15,6 +15,13 @@ public class MonsterController : MonoBehaviour {
 
 	public Transform PlayerTransform { set { _playerTransform = value; }}
 
+	private Transform _cachedTransform;
+
+	void Awake()
+	{
+		_cachedTransform = transform;
+	}
+
 	void Update () 
 	{
 		
@@ -22,7 +29,7 @@ public class MonsterController : MonoBehaviour {
 			return;
 
 		//calculate is target on the left or on the right side of monster
-		Vector3 relative = transform.InverseTransformPoint(_playerTransform.position);
+		Vector3 relative = _cachedTransform.InverseTransformPoint(_playerTransform.position);
 		float angle = Mathf.Atan2(relative.x, relative.z);
 
 		float input = angle > 0 ? 1 : -1;
