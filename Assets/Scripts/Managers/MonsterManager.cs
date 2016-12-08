@@ -14,7 +14,7 @@ public class MonsterManager : MonoBehaviour
 	private List<MonsterController> _monstersPrefabs;
 
 
-	private const int BORDER_X = 18;
+	private const int BORDER_X = 20;
 	private const int BORDER_Z_MIN = -20;
 	private const int BORDER_Z_MAX = 10;
 

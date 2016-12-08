@@ -31,16 +31,46 @@ public class TankMainController : MonoBehaviour {
 		_movementController.Move (movementInput);
 		_movementController.Turn (turnInput);
 	
-		if (Input.GetKeyDown (KeyCode.X) || Input.GetKeyDown(KeyCode.Space)) 
+		if (FirePressed()) 
 		{
 			_currentfireController.FireFromPoint (_bulletStart.position);
 		}
+
+		if (PrevCannonPressed()) 
+		{
+			_cannons [_currentCannonIndex].gameObject.SetActive (false);
+			_currentCannonIndex--;
+			UpdateCannon ();
+		}
+
+		if (NextCannonPressed()) 
+		{
+			_cannons [_currentCannonIndex].gameObject.SetActive (false);
+			_currentCannonIndex++;
+			UpdateCannon ();
+		}
+	}
+
+	private bool FirePressed()
+	{
+		return Input.GetKeyDown (KeyCode.X) || Input.GetKeyDown (KeyCode.Space);
+	}
+
+	private bool PrevCannonPressed()
+	{
+		return Input.GetKeyDown (KeyCode.Q);
+	}
+
+	private bool NextCannonPressed()
+	{
+		return Input.GetKeyDown (KeyCode.W);
 	}
 
 	private void UpdateCannon()
 	{
 		_currentCannonIndex = Mathf.Clamp (_currentCannonIndex, 0, _cannons.Count - 1);
-		//_cannons [_currentCannonIndex].SetActive (true);
+		_cannons [_currentCannonIndex].gameObject.SetActive (true);
+		_currentfireController = _cannons [_currentCannonIndex];
 
 	}
 		

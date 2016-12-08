@@ -50,12 +50,9 @@ public class HealthController : MonoBehaviour {
 
 	public void MakeDamage(int damage)
 	{
-		print ("HP BEFORE " + HealthPoints);
-
 		float calculatedDamage = damage * _armorPoints;
-
 		HealthPoints -= Mathf.RoundToInt (calculatedDamage);
-		print ("HP AFTER " + HealthPoints);
+
 		if (HealthPoints <= 0)
 			MakeDeath ();
 			
@@ -72,7 +69,6 @@ public class HealthController : MonoBehaviour {
 		}
 
 		Destroy (gameObject);
-		//gameObject.SetActive (false);
 	}
 
 	private void SetHealthUI ()
