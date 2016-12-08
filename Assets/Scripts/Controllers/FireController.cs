@@ -8,7 +8,7 @@ public class FireController : MonoBehaviour
 
 	public void FireFromPoint(Vector3 pos)
 	{
-		BulletController bc = SimplePool.GetPooledItem ("Bullet1").GetComponent<BulletController> ();
+		BulletController bc = SimplePool.GetPooledItem (_bulletPrefabName).GetComponent<BulletController> ();
 		bc.transform.position = pos;
 		bc.gameObject.SetActive (true);
 
